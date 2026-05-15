@@ -1,5 +1,6 @@
 #pragma once
 #include "CommonInclude.h"
+#include "JEGameObject.h"
 namespace je
 {
 
@@ -21,6 +22,8 @@ namespace je
 		HDC mHdc;
 
 		float mSpeed;
+
+		GameObject mPlayer;
 	};
 }
 

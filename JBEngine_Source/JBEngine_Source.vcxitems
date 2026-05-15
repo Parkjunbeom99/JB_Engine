@@ -16,8 +16,12 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JEApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JEGameObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JEInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)JEApplication.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JEGameObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JEInput.cpp" />
   </ItemGroup>
 </Project>

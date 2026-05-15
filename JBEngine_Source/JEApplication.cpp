@@ -1,5 +1,5 @@
 #include "JEApplication.h"
-
+#include "JEInput.h"
 
 namespace je
 {
@@ -12,11 +12,16 @@ namespace je
 	}
 	Application::~Application()
 	{
+
 	}
 	void Application::Initialize(HWND hwnd)
 	{
 		mHwnd = hwnd;
 		mHdc = GetDC(mHwnd);
+
+		mPlayer.SetPosition(100, 100);
+
+		Input::Initialize();
 	}
 	void Application::Run()
 	{
@@ -28,8 +33,9 @@ namespace je
 	}
 	void Application::Update()
 	{
-	
-		mSpeed += 0.01f;
+		Input::Update();
+
+		mPlayer.Update();
 	}
 	void Application::LateUpdate()
 	{
@@ -37,11 +43,10 @@ namespace je
 
 	void Application::Render()
 	{
+
+		mPlayer.Render(mHdc);
 		HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
 		HBRUSH oldBrush = (HBRUSH)SelectObject(mHdc, brush);
-
-		Rectangle(mHdc, 100+mSpeed, 100, 200+mSpeed, 200);
-
 
 		(HBRUSH)SelectObject(mHdc, oldBrush);
 
