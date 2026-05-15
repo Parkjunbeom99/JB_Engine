@@ -35,12 +35,23 @@ namespace je
 		static void Initialize();
 		static void Update();
 
-		static bool GetKeyDown(eKeyCode code) { return mKeys[(UINT)code].state == eKeyState::Down; }
-		static bool GetkeyUp(eKeyCode code) { return mKeys[(UINT)code].state == eKeyState::Up; };
-		static bool GetKey(eKeyCode code) { return mKeys[(UINT)code].state == eKeyState::Pressed; };
+		static bool GetKeyDown(eKeyCode code) { return Keys[(UINT)code].state == eKeyState::Down; }
+		static bool GetkeyUp(eKeyCode code) { return Keys[(UINT)code].state == eKeyState::Up; };
+		static bool GetKey(eKeyCode code) { return Keys[(UINT)code].state == eKeyState::Pressed; };
 
 	private:
-		static std::vector<Key> mKeys;
+		static void CreateKeys();
+		static void UpdateKeys();
+
+	
+
+		static void UpdateKey(Key& key);
+		static bool IsKeyDown(eKeyCode code);
+		static void UpdateKeyDown(Key& key);
+		static void UpdateKeyUp(Key& key);
+
+	private:
+		static std::vector<Key> Keys;
 	};
 }
 

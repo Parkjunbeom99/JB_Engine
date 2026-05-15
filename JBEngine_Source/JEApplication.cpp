@@ -1,5 +1,6 @@
 #include "JEApplication.h"
 #include "JEInput.h"
+#include "JETime.h"
 
 namespace je
 {
@@ -22,6 +23,7 @@ namespace je
 		mPlayer.SetPosition(100, 100);
 
 		Input::Initialize();
+		Time::Initialize();
 	}
 	void Application::Run()
 	{
@@ -35,6 +37,8 @@ namespace je
 	{
 		Input::Update();
 
+		Time::Update();
+
 		mPlayer.Update();
 	}
 	void Application::LateUpdate()
@@ -43,15 +47,8 @@ namespace je
 
 	void Application::Render()
 	{
-
+		Time::Render(mHdc);
 		mPlayer.Render(mHdc);
-		HBRUSH brush = CreateSolidBrush(RGB(0, 0, 255));
-		HBRUSH oldBrush = (HBRUSH)SelectObject(mHdc, brush);
-
-		(HBRUSH)SelectObject(mHdc, oldBrush);
-
-		DeleteObject(brush);
-
-		
+			
 	}
 }

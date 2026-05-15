@@ -3,7 +3,7 @@
 
 namespace je
 {
-	std::vector<Input::Key> Input::mKeys = {};
+	std::vector<Input::Key> Input::Keys = {};
 
 	int ASCII[(UINT)eKeyCode::End] =
 	{
@@ -15,8 +15,19 @@ namespace je
 
 	void Input::Initialize()
 	{
+		CreateKeys();
+	}
 
-		mKeys.reserve((UINT)eKeyCode::End);
+	void Input::Update()
+	{
+
+		UpdateKeys();
+	}
+
+#pragma region Key
+	void Input::CreateKeys()
+	{
+		Keys.reserve((UINT)eKeyCode::End);
 
 		for (size_t i = 0; i < (UINT)eKeyCode::End; i++)
 		{
@@ -25,40 +36,63 @@ namespace je
 			key.state = eKeyState::None;
 			key.KeyCode = (eKeyCode)i;
 
-			mKeys.push_back(key);
+			Keys.push_back(key);
 		}
 	}
 
-	void Input::Update()
+	void Input::UpdateKeys()
 	{
-		for (size_t i = 0; i < mKeys.size(); i++)
+		std::for_each(Keys.begin(),Keys.end(),
+			[](Key& key)
+			{
+				UpdateKey(key);
+			});
+	}
+
+	void Input::UpdateKey(Key& key)
+	{
+		if (IsKeyDown(key.KeyCode))
 		{
-			// 키가 눌렸는지  아닌지
-			if (GetAsyncKeyState(ASCII[i]) & 0X8000)
-			{
-				if (mKeys[i].bPressed == true)
-				{
-					mKeys[i].state = eKeyState::Pressed;
-				}
-				else
-				{
-					mKeys[i].state = eKeyState::Down;
-				}
-				mKeys[i].bPressed = true;
-			}
-			else
-			{
-				if (mKeys[i].bPressed == true)
-				{
-					mKeys[i].state = eKeyState::Up;
-				}
-				else
-				{
-					mKeys[i].state = eKeyState::None;
-				}
-				mKeys[i].bPressed = false;
-			}
+			UpdateKeyDown(key);
 		}
+		else
+		{
+			UpdateKeyUp(key);
+		}
+	}
+
+	bool Input::IsKeyDown(eKeyCode code)
+	{
+		return GetAsyncKeyState(ASCII[(UINT)code]) & 0x8000;
+	}
+
+	void Input::UpdateKeyDown(Key& key)
+	{
+
+		if (key.bPressed == true)
+		{
+			key.state = eKeyState::Pressed;
+		}
+		else
+		{
+			key.state = eKeyState::Down;
+		}
+		key.bPressed = true;
 
 	}
-}
+
+	void Input::UpdateKeyUp(Key& key)
+	{
+
+		if (key.bPressed == true)
+		{
+			key.state = eKeyState::Up;
+		}
+		else
+		{
+			key.state = eKeyState::None;
+		}
+		key.bPressed = false;
+	}
+#pragma endregion
+} 

@@ -1,6 +1,6 @@
 #include "JEGameObject.h"
 #include "JEInput.h"
-
+#include "JETime.h"
 namespace je
 {
 	GameObject::GameObject()
@@ -24,19 +24,19 @@ namespace je
 
 		if (Input::GetKey(eKeyCode::A) == true)
 		{
-			mX -= 0.01f;
+			mX -= 0.01f* Time::DeltaTime();
 		}
 		if (Input::GetKey(eKeyCode::D) == true)
 		{
-			mX += 0.01f;
+			mX += 0.01f* Time::DeltaTime();
 		}
 		if(Input::GetKey(eKeyCode::W) == true)
 		{
-			mY -= 0.01f;
+			mY -= 0.01f * Time::DeltaTime();
 		}
 		if(Input::GetKey(eKeyCode::S) == true)
 		{
-			mY += 0.01f;
+			mY += 0.01f * Time::DeltaTime();
 		}
 
 	}
@@ -48,6 +48,7 @@ namespace je
 
 	void GameObject::Render(HDC hdc)
 	{
+
 		Rectangle(hdc, 100 + mX, 100 + mY, 200 + mX, 200 + mY);
 	}
 
